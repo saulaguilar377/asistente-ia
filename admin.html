@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Panel · Asistente IA</title>
+<link rel="stylesheet" href="estilos.css" />
+<style>
+  .fila { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .pedido { margin-bottom: 14px; }
+  .dato { font-size: .93rem; color: var(--suave); }
+  .dato b { color: var(--texto); }
+  .etiqueta { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: .78rem; font-weight: 600; }
+  .etiqueta.pendiente { background: rgba(242,201,76,.15); color: var(--amarillo); }
+  .etiqueta.aprobado  { background: rgba(111,207,151,.15); color: var(--verde); }
+  .etiqueta.rechazado { background: rgba(255,138,128,.15); color: var(--rojo); }
+</style>
+</head>
+<body>
+
+<header class="encabezado contenedor">
+  <h1>Panel</h1>
+  <p>Genera licencias sin abrir la consola.</p>
+</header>
+
+<!-- ------------------------------ Entrar ------------------------------ -->
+<section class="contenedor" id="vistaClave">
+  <div class="tarjeta" style="max-width:420px;margin:0 auto">
+    <label for="clave">Clave del panel</label>
+    <input type="password" id="clave" autocomplete="off" />
+    <button class="boton" id="btnEntrar" style="margin-top:16px">Entrar</button>
+    <p class="error oculto" id="errorClave"></p>
+  </div>
+</section>
+
+<!-- ------------------------------ Panel ------------------------------- -->
+<div id="vistaPanel" class="oculto">
+
+  <section class="contenedor">
+    <h2>Generar licencia</h2>
+    <p style="margin-bottom:18px">Cierras la venta por WhatsApp, generas el código aquí y se lo pegas en el chat.</p>
+
+    <div class="tarjeta">
+      <label for="contacto">¿Para quién es? (WhatsApp o correo)</label>
+      <input type="text" id="contacto" placeholder="999888777" autocomplete="off" />
+
+      <div class="fila" style="margin-top:4px">
+        <div>
+          <label for="dias">Días</label>
+          <input type="text" id="dias" value="30" />
+        </div>
+        <div>
+          <label for="equipos">Computadoras</label>
+          <input type="text" id="equipos" value="2" />
+        </div>
+      </div>
+
+      <button class="boton" id="btnGenerar" style="margin-top:18px">Generar código</button>
+      <p class="error oculto" id="errorGenerar"></p>
+
+      <div id="resultado" class="oculto">
+        <div class="codigo" id="codigoNuevo"></div>
+        <p class="centrado" id="detalleCodigo"></p>
+        <button class="boton secundario" id="btnCopiar" style="margin-top:10px">Copiar código</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="contenedor">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <h2 style="margin:0">Pedidos desde la web</h2>
+      <button class="boton secundario" id="btnRecargar">Actualizar</button>
+    </div>
+    <p style="margin-top:10px">
+      Vacío por ahora: hoy las ventas se cierran por WhatsApp. Esta sección se llena sola
+      cuando conectes un método de pago en la web.
+    </p>
+    <div id="lista" style="margin-top:20px"></div>
+  </section>
+
+</div>
+
+<footer><p><a href="index.html">Ir a la web</a></p></footer>
+
+<script>
+  const SERVIDOR = 'https://asistente-ia-servidor.saulaguilarventura1.workers.dev';
+  const $ = id => document.getElementById(id);
+  let clave = localStorage.getItem('claveAdminAsistenteIA') || '';
+
+  const fecha = ms => new Date(ms).toLocaleString('es-PE');
+
+  async function pedir(ruta, cuerpo) {
+    const r = await fetch(SERVIDOR + ruta, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clave, ...cuerpo })
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || 'Error del servidor.');
+    return d;
+  }
+
+  // ------------------------------ Generar ------------------------------
+  $('btnGenerar').addEventListener('click', async () => {
+    const contacto = $('contacto').value.trim();
+    const error = $('errorGenerar');
+    error.classList.add('oculto');
+
+    if (!contacto) {
+      error.textContent = 'Escribe a quién es la licencia.';
+      error.classList.remove('oculto');
+      return;
+    }
+
+    $('btnGenerar').disabled = true;
+    $('btnGenerar').textContent = 'Generando…';
+
+    try {
+      const d = await pedir('/admin/licencia', {
+        contacto,
+        dias: $('dias').value.trim(),
+        equipos: $('equipos').value.trim(),
+        maxEquipos: $('equipos').value.trim()
+      });
+
+      $('codigoNuevo').textContent = d.codigo;
+      $('detalleCodigo').textContent =
+        `Plan ${d.plan} · ${d.dias} días · vence el ${new Date(d.expira).toLocaleDateString('es-PE')}`;
+      $('resultado').classList.remove('oculto');
+      $('contacto').value = '';
+    } catch (e) {
+      error.textContent = e.message;
+      error.classList.remove('oculto');
+    }
+
+    $('btnGenerar').disabled = false;
+    $('btnGenerar').textContent = 'Generar código';
+  });
+
+  $('btnCopiar').addEventListener('click', () => {
+    navigator.clipboard.writeText($('codigoNuevo').textContent);
+    $('btnCopiar').textContent = 'Copiado';
+    setTimeout(() => ($('btnCopiar').textContent = 'Copiar código'), 1500);
+  });
+
+  // ------------------------------ Pedidos ------------------------------
+  async function cargar() {
+    const { pedidos } = await pedir('/admin/pedidos', {});
+    const lista = $('lista');
+    lista.innerHTML = '';
+
+    if (!pedidos.length) return;
+
+    for (const p of pedidos) {
+      const tarjeta = document.createElement('div');
+      tarjeta.className = 'tarjeta pedido';
+      const acciones = p.estado === 'pendiente'
+        ? `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+             <button class="boton" data-aprobar="${p.id}">Aceptar</button>
+             <button class="boton secundario" data-rechazar="${p.id}">Rechazar</button>
+           </div>`
+        : (p.codigo ? `<div class="dato" style="margin-top:8px">Código: <b>${p.codigo}</b></div>` : '');
+
+      tarjeta.innerHTML = `
+        <div><span class="etiqueta ${p.estado}">${p.estado}</span></div>
+        <div class="dato" style="margin-top:8px">Operación: <b>${p.operacion || '—'}</b></div>
+        <div class="dato">Contacto: <b>${p.contacto}</b></div>
+        <div class="dato">${fecha(p.creado)}</div>
+        ${acciones}`;
+      lista.appendChild(tarjeta);
+    }
+  }
+
+  $('lista').addEventListener('click', async evento => {
+    const aprobar = evento.target.dataset.aprobar;
+    const rechazar = evento.target.dataset.rechazar;
+    if (!aprobar && !rechazar) return;
+    if (rechazar && !confirm('¿Rechazar este pedido?')) return;
+
+    evento.target.disabled = true;
+    try {
+      const d = await pedir(aprobar ? '/admin/aprobar' : '/admin/rechazar', { id: aprobar || rechazar });
+      if (d.codigo) alert('Código generado: ' + d.codigo);
+    } catch (e) {
+      alert(e.message);
+    }
+    await cargar();
+  });
+
+  $('btnRecargar').addEventListener('click', cargar);
+
+  // ------------------------------- Entrar ------------------------------
+  async function entrar() {
+    await cargar();
+    localStorage.setItem('claveAdminAsistenteIA', clave);
+    $('vistaClave').classList.add('oculto');
+    $('vistaPanel').classList.remove('oculto');
+  }
+
+  $('btnEntrar').addEventListener('click', async () => {
+    clave = $('clave').value;
+    try {
+      await entrar();
+    } catch (e) {
+      $('errorClave').textContent = e.message;
+      $('errorClave').classList.remove('oculto');
+    }
+  });
+
+  $('clave').addEventListener('keydown', e => { if (e.key === 'Enter') $('btnEntrar').click(); });
+
+  if (clave) entrar().catch(() => localStorage.removeItem('claveAdminAsistenteIA'));
+</script>
+
+</body>
+</html>

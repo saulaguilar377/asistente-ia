@@ -1,0 +1,198 @@
+/* Misma paleta que el programa, para que la web y la app se vean de la misma
+   familia. */
+:root {
+  --fondo: #0c0e14;
+  --panel: #141721;
+  --borde: rgba(255, 255, 255, 0.10);
+  --texto: #e9edf5;
+  --suave: #9aa4b8;
+  --azul: #4a7ce0;
+  --azul-claro: #5b8def;
+  --verde: #6fcf97;
+  --rojo: #ff8a80;
+  --amarillo: #f2c94c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.contenedor { width: min(920px, 92vw); margin: 0 auto; }
+
+/* ------------------------------ Tipografía ------------------------------ */
+h1 { font-size: clamp(1.9rem, 5vw, 3rem); line-height: 1.15; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.3rem, 3.5vw, 1.8rem); margin-bottom: 14px; letter-spacing: -0.01em; }
+h3 { font-size: 1.05rem; margin-bottom: 6px; }
+p  { color: var(--suave); }
+strong { color: var(--texto); }
+
+.grande { font-size: 1.12rem; }
+
+/* ------------------------------- Secciones ------------------------------ */
+section { padding: 56px 0; border-top: 1px solid var(--borde); }
+section:first-of-type { border-top: 0; }
+
+.encabezado { padding: 72px 0 56px; text-align: center; }
+.encabezado p { max-width: 620px; margin: 18px auto 30px; }
+
+/* -------------------------------- Botones ------------------------------- */
+.boton {
+  display: inline-block;
+  padding: 15px 30px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--azul);
+  color: #fff;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.boton:hover { background: var(--azul-claro); }
+.boton:disabled { background: #39415a; color: #7e879b; cursor: default; }
+
+.boton.secundario {
+  background: transparent;
+  border: 1px solid var(--borde);
+  color: var(--texto);
+  font-size: 0.95rem;
+  padding: 12px 22px;
+}
+.boton.secundario:hover { background: rgba(255, 255, 255, 0.06); }
+
+.nota { font-size: 0.86rem; color: var(--suave); margin-top: 12px; }
+
+/* -------------------------------- Tarjetas ------------------------------ */
+.rejilla { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+.tarjeta {
+  padding: 24px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--panel);
+}
+.tarjeta p { font-size: 0.95rem; }
+
+.tarjeta.destacada { border-color: var(--azul); }
+
+/* --------------------------------- Planes ------------------------------- */
+.precio { font-size: 2.1rem; font-weight: 700; margin: 10px 0 4px; }
+.precio small { font-size: 0.9rem; font-weight: 400; color: var(--suave); }
+
+.lista { list-style: none; margin: 16px 0 22px; }
+.lista li { padding: 5px 0 5px 24px; position: relative; color: var(--suave); font-size: 0.95rem; }
+.lista li::before { content: '✓'; position: absolute; left: 0; color: var(--verde); }
+
+/* --------------------------------- Pasos -------------------------------- */
+.pasos { counter-reset: paso; display: grid; gap: 16px; }
+.paso {
+  counter-increment: paso;
+  position: relative;
+  padding: 18px 20px 18px 62px;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.paso::before {
+  content: counter(paso);
+  position: absolute; left: 20px; top: 18px;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--azul);
+  font-size: 0.85rem; font-weight: 700; color: #fff;
+}
+.paso p { font-size: 0.95rem; }
+
+/* --------------------------------- Aviso -------------------------------- */
+.aviso {
+  padding: 18px 20px;
+  border: 1px solid rgba(242, 201, 76, 0.35);
+  border-left: 3px solid var(--amarillo);
+  border-radius: 10px;
+  background: rgba(242, 201, 76, 0.06);
+  margin: 22px 0;
+}
+.aviso h3 { color: var(--amarillo); }
+.aviso p { font-size: 0.95rem; }
+
+/* ------------------------------ Formularios ----------------------------- */
+label { display: block; font-size: 0.9rem; margin: 16px 0 6px; color: var(--texto); }
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--texto);
+  font: inherit;
+  font-size: 1rem;
+}
+input:focus { outline: none; border-color: var(--azul-claro); }
+
+.error { color: var(--rojo); font-size: 0.92rem; margin-top: 12px; }
+.exito { color: var(--verde); font-size: 0.92rem; margin-top: 12px; }
+
+/* ------------------------------- Preguntas ------------------------------ */
+details {
+  border-bottom: 1px solid var(--borde);
+  padding: 16px 0;
+}
+summary { cursor: pointer; font-weight: 600; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '+ '; color: var(--azul-claro); font-weight: 700; }
+details[open] summary::before { content: '– '; }
+details p { margin-top: 10px; font-size: 0.95rem; }
+
+/* -------------------------------- Código -------------------------------- */
+.codigo {
+  font-family: "Consolas", "JetBrains Mono", monospace;
+  font-size: clamp(1.4rem, 5vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--verde);
+  padding: 20px;
+  border: 1px dashed var(--verde);
+  border-radius: 12px;
+  background: rgba(111, 207, 151, 0.07);
+  text-align: center;
+  margin: 20px 0;
+  user-select: all;
+}
+
+/* --------------------------------- Video -------------------------------- */
+.video {
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--panel);
+  display: grid;
+  place-items: center;
+  color: var(--suave);
+  text-align: center;
+  padding: 20px;
+}
+
+/* ---------------------------------- Pie --------------------------------- */
+footer {
+  padding: 40px 0 60px;
+  border-top: 1px solid var(--borde);
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--suave);
+}
+footer a { color: var(--suave); }
+
+a { color: var(--azul-claro); }
+
+.centrado { text-align: center; }
+.oculto { display: none !important; }

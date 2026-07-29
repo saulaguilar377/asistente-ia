@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Comprar Asistente IA Pro</title>
+<link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+
+<header class="encabezado contenedor">
+  <h1>Plan Pro</h1>
+  <div class="precio" style="font-size:2.6rem">S/ 19.90 <small>al mes</small></div>
+  <p class="grande" style="margin-top:14px">
+    50 consultas al día, en 2 computadoras.
+  </p>
+  <a class="boton" id="btnWhatsApp" href="#">Escríbenos por WhatsApp</a>
+  <p class="nota">Te respondemos y te enviamos tu código de activación.</p>
+</header>
+
+<section class="contenedor">
+  <h2>Cómo funciona</h2>
+  <div class="pasos">
+    <div class="paso">
+      <h3>Escríbenos por WhatsApp</h3>
+      <p>El botón de arriba abre el chat con un mensaje listo. Solo lo envías.</p>
+    </div>
+    <div class="paso">
+      <h3>Coordinamos el pago</h3>
+      <p>Te decimos cómo pagar y confirmamos cuando llegue.</p>
+    </div>
+    <div class="paso">
+      <h3>Te mandamos tu código</h3>
+      <p>Un código como <strong>K7RM-P2XW-9BQT</strong>, por el mismo chat.</p>
+    </div>
+    <div class="paso">
+      <h3>Lo activas en el programa</h3>
+      <p>
+        Abre <strong>Asistente IA</strong>, presiona el <strong>engranaje</strong> de la barra
+        de arriba, escribe tu código y dale a <strong>Activar licencia</strong>.
+        El contador cambia a verde con 50 consultas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="contenedor">
+  <h2>Qué incluye</h2>
+  <div class="rejilla">
+    <div class="tarjeta">
+      <h3>Gratis</h3>
+      <div class="precio">S/ 0</div>
+      <ul class="lista">
+        <li>10 consultas cada día</li>
+        <li>Sin registro ni tarjeta</li>
+        <li>Se renueva solo cada día</li>
+      </ul>
+      <a class="boton secundario" href="gracias.html">Descargar</a>
+    </div>
+    <div class="tarjeta destacada">
+      <h3>Pro</h3>
+      <div class="precio">S/ 19.90 <small>al mes</small></div>
+      <ul class="lista">
+        <li>50 consultas cada día</li>
+        <li>Funciona en 2 computadoras</li>
+        <li>Soporte directo por WhatsApp</li>
+      </ul>
+      <a class="boton" id="btnWhatsApp2" href="#">Escríbenos</a>
+    </div>
+  </div>
+</section>
+
+<section class="contenedor">
+  <h2>Preguntas</h2>
+
+  <details>
+    <summary>¿Tengo que pagar para probarlo?</summary>
+    <p>
+      No. Descárgalo y úsalo con 10 consultas gratis todos los días, sin registro ni tarjeta.
+      El plan Pro es solo si te quedas corto.
+    </p>
+  </details>
+
+  <details>
+    <summary>¿La licencia se renueva sola?</summary>
+    <p>
+      No. Dura los días que compraste y no se cobra nada automáticamente. Cuando quieras
+      seguir, nos escribes de nuevo.
+    </p>
+  </details>
+
+  <details>
+    <summary>¿Y si cambio de computadora?</summary>
+    <p>
+      Tu licencia sirve en 2. Si necesitas moverla a otra, escríbenos por WhatsApp y la liberamos.
+    </p>
+  </details>
+</section>
+
+<footer>
+  <p><a href="index.html">Volver al inicio</a></p>
+</footer>
+
+<script>
+  // ⚠️ CAMBIA ESTO por tu número, con código de país y sin espacios ni "+".
+  //    Perú es 51. Ejemplo: un 999 888 777 se escribe 51999888777
+  const WHATSAPP = '51999888777';
+
+  const mensaje = encodeURIComponent(
+    'Hola, quiero el plan Pro de Asistente IA (S/ 19.90 al mes). ¿Cómo hago el pago?'
+  );
+  const enlace = `https://wa.me/${WHATSAPP}?text=${mensaje}`;
+
+  document.getElementById('btnWhatsApp').href = enlace;
+  document.getElementById('btnWhatsApp2').href = enlace;
+</script>
+
+</body>
+</html>

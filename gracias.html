@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Descargando Asistente IA</title>
+<link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+
+<header class="encabezado contenedor">
+  <h1>Tu descarga empezó</h1>
+  <p class="grande">
+    Son 87 MB. Mientras baja, lee esto — te va a ahorrar el susto que se lleva todo el mundo
+    la primera vez.
+  </p>
+  <a class="boton secundario" id="reintentar" href="#">¿No empezó? Descargar de nuevo</a>
+</header>
+
+<section class="contenedor">
+  <div class="aviso">
+    <h3>Windows te va a mostrar una pantalla azul</h3>
+    <p>
+      Va a decir <strong>"Windows protegió tu PC"</strong>. Es normal y no significa que el
+      programa tenga virus: le pasa a todo programa nuevo que aún no tiene certificado de
+      firma digital. Solo sale la primera vez.
+    </p>
+  </div>
+
+  <h2>Qué hacer, paso a paso</h2>
+
+  <div class="pasos">
+    <div class="paso">
+      <h3>Busca el archivo descargado</h3>
+      <p>Se llama <strong>Asistente-IA.exe</strong> y suele quedar en tu carpeta de Descargas.</p>
+    </div>
+    <div class="paso">
+      <h3>Haz doble clic</h3>
+      <p>Si aparece la pantalla azul, no le des a "No ejecutar".</p>
+    </div>
+    <div class="paso">
+      <h3>Presiona "Más información"</h3>
+      <p>Es un texto pequeño debajo del mensaje. Al tocarlo aparece un botón nuevo.</p>
+    </div>
+    <div class="paso">
+      <h3>Presiona "Ejecutar de todas formas"</h3>
+      <p>El programa se abre. Windows ya no vuelve a preguntarte.</p>
+    </div>
+    <div class="paso">
+      <h3>Pruébalo</h3>
+      <p>
+        Abre cualquier documento y presiona <strong>Ctrl + Shift + Espacio</strong>.
+        Arriba verás cuántas consultas gratis te quedan hoy.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="contenedor centrado">
+  <h2>¿Necesitas más de 10 al día?</h2>
+  <p style="margin-bottom:22px">El plan Pro te da 50 diarias en 2 computadoras, por S/ 19.90 al mes.</p>
+  <a class="boton" href="comprar.html">Ver plan Pro</a>
+</section>
+
+<footer>
+  <p><a href="index.html">Volver al inicio</a></p>
+</footer>
+
+<script>
+  const SERVIDOR = 'https://asistente-ia-servidor.saulaguilarventura1.workers.dev';
+  const enlace = SERVIDOR + '/descargar';
+
+  // La descarga arranca sola al llegar a esta página.
+  location.href = enlace;
+  document.getElementById('reintentar').href = enlace;
+</script>
+
+</body>
+</html>
