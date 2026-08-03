@@ -169,7 +169,17 @@ details p { margin-top: 10px; font-size: 0.95rem; }
   user-select: all;
 }
 
-/* ------------------------------ Demo animado ---------------------------- */
+/* --------------------------------- Demo --------------------------------- */
+.demo-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: #0a0c12;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+}
+
 .demo-pantalla {
   position: relative;
   aspect-ratio: 16 / 9;
