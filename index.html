@@ -4,48 +4,87 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Asistente IA — mira tu pantalla y te la explica</title>
-<meta name="description" content="Presiona una tecla y la IA lee tu pantalla: resume documentos, explica errores y responde tus dudas. 10 consultas gratis al día." />
+<meta name="description" content="Presiona una tecla y la IA lee tu pantalla: resume documentos, explica errores y responde tus dudas. 10 consultas gratis para probarlo." />
 <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
 
-<header class="encabezado contenedor">
-  <h1>Mira tu pantalla<br>y te explica lo que hay</h1>
-  <p class="grande">
-    Abre cualquier documento, presiona <strong>Ctrl + Shift + Espacio</strong> y listo.
-    Resume PDFs largos, explica errores, aclara normas técnicas y responde tus dudas
-    sobre lo que tengas en la pantalla.
-  </p>
-  <a class="boton" href="gracias.html">Descargar gratis para Windows</a>
-  <p class="nota">10 consultas gratis para probarlo · Sin registro · Sin tarjeta</p>
+<nav class="barra-nav">
+  <div class="contenedor nav-fila">
+    <a class="marca" href="#">Asistente IA</a>
+    <div class="nav-enlaces">
+      <a href="#usos">Para qué sirve</a>
+      <a href="#pasos">Cómo funciona</a>
+      <a href="#precios">Precios</a>
+      <a href="#preguntas">Preguntas</a>
+    </div>
+    <a class="boton compacto" href="gracias.html">Descargar</a>
+  </div>
+</nav>
+
+<header class="heroe contenedor">
+  <div class="heroe-texto">
+    <h1>La IA que <span class="resalte">ve tu pantalla</span> y te la explica</h1>
+    <p class="grande">
+      ¿Atascado con un documento larguísimo, una norma técnica o un error que no entiendes?
+      Un atajo captura lo que estás mirando y te devuelve la respuesta al instante.
+      Sin cambiar de ventana, sin copiar y pegar.
+    </p>
+
+    <div class="heroe-botones">
+      <a class="boton" href="gracias.html">Descargar gratis para Windows</a>
+    </div>
+
+    <p class="nota">
+      10 consultas gratis · Sin registro · Sin tarjeta · Se dispara con
+      <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Espacio</kbd>
+    </p>
+  </div>
+
+  <div class="heroe-visual">
+    <video class="demo-video" src="demo-real.mp4" autoplay muted loop playsinline controls
+           preload="metadata" aria-label="Demostración de Asistente IA"></video>
+    <p class="demo-pie">Grabación real. Toca el altavoz para oírlo.</p>
+  </div>
 </header>
 
-<section class="contenedor">
-  <!-- Arranca solo y sin sonido; quien quiera oír la voz activa el audio. -->
-  <video class="demo-video" src="demo-real.mp4" autoplay muted loop playsinline controls
-         preload="metadata" aria-label="Demostración de Asistente IA en 30 segundos"></video>
-  <p class="demo-pie">Grabación real del programa. Toca el altavoz para escucharlo con voz.</p>
-</section>
-
-<section class="contenedor">
+<section class="contenedor" id="usos">
   <h2>Para qué sirve</h2>
   <div class="rejilla">
     <div class="tarjeta">
       <h3>Documentos largos</h3>
-      <p>Abre un PDF de 200 páginas y pídele lo importante. Te lo resume sin que tengas que leerlo entero.</p>
+      <p>Abre un contrato de 42 páginas y pídele lo importante. Te dice qué firmas antes de firmarlo.</p>
     </div>
     <div class="tarjeta">
       <h3>Errores que no entiendes</h3>
-      <p>Un mensaje raro de Excel, de Windows o de cualquier programa. Te dice qué significa y cómo resolverlo.</p>
+      <p>Un mensaje raro de Excel, de Windows o de cualquier programa. Qué significa y cómo se arregla.</p>
     </div>
     <div class="tarjeta">
-      <h3>Temas técnicos</h3>
-      <p>Normas, reglamentos, tablas, contratos. Te explica qué dice y por qué importa, en español claro.</p>
+      <h3>Normas y temas técnicos</h3>
+      <p>Reglamentos, expedientes, tablas. Te explica qué dice y por qué importa, en español claro.</p>
     </div>
   </div>
 </section>
 
-<section class="contenedor">
+<section class="contenedor" id="pasos">
+  <h2>Cómo funciona</h2>
+  <div class="pasos">
+    <div class="paso">
+      <h3>Abre lo que quieras consultar</h3>
+      <p>Un PDF, una página web, un Excel. Lo que sea que tengas en pantalla.</p>
+    </div>
+    <div class="paso">
+      <h3>Presiona <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Espacio</kbd></h3>
+      <p>El programa toma una foto de tu pantalla y la analiza. También puedes escribir tu propia pregunta.</p>
+    </div>
+    <div class="paso">
+      <h3>Lee la respuesta</h3>
+      <p>Aparece en segundos, con el porqué en una línea. Sin cambiar de ventana ni copiar nada.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contenedor" id="precios">
   <h2>Precios</h2>
   <div class="rejilla">
     <div class="tarjeta">
@@ -99,7 +138,7 @@
   </div>
 </section>
 
-<section class="contenedor">
+<section class="contenedor" id="preguntas">
   <h2>Preguntas frecuentes</h2>
 
   <details>
@@ -141,7 +180,7 @@
     <summary>¿Qué pasa cuando se me acaban las 10 consultas de prueba?</summary>
     <p>
       El programa te avisa arriba, donde siempre ves cuántas te quedan. Las 10 son para probarlo
-      una vez y no se renuevan: para seguir usándolo necesitas el plan Pro, que te da 50 al día.
+      una vez y no se renuevan: para seguir usándolo necesitas el plan Pro, que te da 50 más.
     </p>
   </details>
 
@@ -149,6 +188,12 @@
     <summary>¿Funciona en Mac o en el celular?</summary>
     <p>Por ahora solo en Windows.</p>
   </details>
+</section>
+
+<section class="contenedor cierre-cta">
+  <h2>Pruébalo con lo que tengas abierto ahora</h2>
+  <p style="margin-bottom:26px">10 consultas gratis. Sin registro y sin tarjeta.</p>
+  <a class="boton" href="gracias.html">Descargar gratis para Windows</a>
 </section>
 
 <footer>

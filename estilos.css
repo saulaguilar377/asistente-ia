@@ -41,6 +41,75 @@ section:first-of-type { border-top: 0; }
 .encabezado { padding: 72px 0 56px; text-align: center; }
 .encabezado p { max-width: 620px; margin: 18px auto 30px; }
 
+/* ------------------------------ Barra de nav ---------------------------- */
+.barra-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(12, 14, 20, .88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--borde);
+}
+.nav-fila {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 0;
+}
+.marca { font-weight: 700; font-size: 1.05rem; color: var(--texto); text-decoration: none; }
+.nav-enlaces { display: flex; gap: 22px; flex: 1; }
+.nav-enlaces a {
+  color: var(--suave);
+  text-decoration: none;
+  font-size: .95rem;
+}
+.nav-enlaces a:hover { color: var(--texto); }
+
+.boton.compacto { padding: 9px 18px; font-size: .92rem; }
+
+/* --------------------------------- Héroe -------------------------------- */
+.heroe {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 52px;
+  align-items: center;
+  padding: 72px 0 64px;
+}
+.heroe h1 { margin-bottom: 20px; }
+.heroe .grande { margin-bottom: 28px; }
+.heroe-botones { display: flex; gap: 12px; flex-wrap: wrap; }
+.resalte { color: var(--azul-claro); }
+
+.heroe .nota kbd {
+  display: inline-block;
+  padding: 2px 7px;
+  margin: 0 1px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .07);
+  font-family: Consolas, monospace;
+  font-size: .82em;
+  color: var(--texto);
+}
+
+.paso kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .07);
+  font-family: Consolas, monospace;
+  font-size: .85em;
+}
+
+.cierre-cta { text-align: center; }
+
+@media (max-width: 820px) {
+  .heroe { grid-template-columns: 1fr; gap: 34px; padding: 44px 0; }
+  .nav-enlaces { display: none; }
+  .nav-fila { justify-content: space-between; }
+}
+
 /* -------------------------------- Botones ------------------------------- */
 .boton {
   display: inline-block;
