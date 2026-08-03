@@ -14,33 +14,60 @@
   <p class="grande" style="margin-top:14px">
     50 consultas al día, en 2 computadoras.
   </p>
-  <a class="boton" id="btnWhatsApp" href="#">Escríbenos por WhatsApp</a>
-  <p class="nota">Te respondemos y te enviamos tu código de activación.</p>
+  <p class="nota">Pagas con Yape · Tu código llega al instante</p>
 </header>
 
-<section class="contenedor">
+<!-- ------------------------- Paso 1: los datos ------------------------ -->
+<section class="contenedor" id="vistaPago">
   <h2>Cómo funciona</h2>
   <div class="pasos">
     <div class="paso">
-      <h3>Escríbenos por WhatsApp</h3>
-      <p>El botón de arriba abre el chat con un mensaje listo. Solo lo envías.</p>
+      <h3>Déjanos tu contacto</h3>
+      <p>Por si necesitamos ubicarte. Nada más.</p>
     </div>
     <div class="paso">
-      <h3>Coordinamos el pago</h3>
-      <p>Te decimos cómo pagar y confirmamos cuando llegue.</p>
+      <h3>Paga con Yape</h3>
+      <p>Te llevamos a la pantalla de pago segura. Escaneas y listo.</p>
     </div>
     <div class="paso">
-      <h3>Te mandamos tu código</h3>
-      <p>Un código como <strong>K7RM-P2XW-9BQT</strong>, por el mismo chat.</p>
+      <h3>Recibes tu código al instante</h3>
+      <p>Aparece solo en esta pantalla, sin esperar a que nadie lo revise.</p>
     </div>
-    <div class="paso">
-      <h3>Lo activas en el programa</h3>
-      <p>
-        Abre <strong>Asistente IA</strong>, presiona el <strong>engranaje</strong> de la barra
-        de arriba, escribe tu código y dale a <strong>Activar licencia</strong>.
-        El contador cambia a verde con 50 consultas.
-      </p>
+  </div>
+
+  <div class="tarjeta" style="margin-top:26px">
+    <label for="contacto">Tu WhatsApp o correo</label>
+    <input type="text" id="contacto" placeholder="999888777" autocomplete="off" />
+    <button class="boton" id="btnPagar" style="margin-top:18px">Pagar S/ 19.90 con Yape</button>
+    <p class="error oculto" id="errorPago"></p>
+    <p class="nota">Al continuar te llevamos a la pantalla de pago de Mercado Pago.</p>
+  </div>
+</section>
+
+<!-- ------------------------ Paso 2: esperando ------------------------- -->
+<section class="contenedor oculto" id="vistaEspera">
+  <div class="tarjeta centrado">
+    <h2>Confirmando tu pago…</h2>
+    <p>En cuanto Yape confirme, tu código aparece aquí solo. Suele tardar segundos.</p>
+    <p style="margin-top:18px"><strong>No cierres esta página.</strong></p>
+    <p class="nota" id="avisoEnlace" style="margin-top:22px"></p>
+  </div>
+</section>
+
+<!-- ------------------------- Paso 3: el código ------------------------ -->
+<section class="contenedor oculto" id="vistaCodigo">
+  <div class="tarjeta centrado">
+    <h2>¡Listo! Tu licencia está activa</h2>
+    <p>Este es tu código de activación:</p>
+    <div class="codigo" id="codigo"></div>
+
+    <h3 style="margin-top:26px">Cómo activarlo</h3>
+    <div class="pasos" style="text-align:left;margin-top:14px">
+      <div class="paso"><p>Abre <strong>Asistente IA</strong> en tu computadora.</p></div>
+      <div class="paso"><p>Presiona el <strong>engranaje</strong> de la barra de arriba.</p></div>
+      <div class="paso"><p>Escribe tu código y dale a <strong>Activar licencia</strong>.</p></div>
     </div>
+    <p class="nota" style="margin-top:20px">Guárdalo. Sirve para 2 computadoras.</p>
   </div>
 </section>
 
@@ -65,7 +92,7 @@
         <li>Funciona en 2 computadoras</li>
         <li>Soporte directo por WhatsApp</li>
       </ul>
-      <a class="boton" id="btnWhatsApp2" href="#">Escríbenos</a>
+      <a class="boton" href="#vistaPago">Comprar con Yape</a>
     </div>
   </div>
 </section>
@@ -95,6 +122,23 @@
       Tu licencia sirve en 2. Si necesitas moverla a otra, escríbenos por WhatsApp y la liberamos.
     </p>
   </details>
+
+  <details>
+    <summary>¿Es seguro pagar aquí?</summary>
+    <p>
+      El pago se hace en la pantalla de <strong>Mercado Pago</strong>, no en esta web.
+      Nosotros nunca vemos ni guardamos los datos de tu Yape: solo recibimos el aviso
+      de que el pago se aprobó.
+    </p>
+  </details>
+
+  <details>
+    <summary>Pagué pero no me llegó el código</summary>
+    <p>
+      Vuelve al enlace de tu pedido y espera unos segundos más. Si sigue sin aparecer,
+      escríbenos por WhatsApp con tu comprobante y lo resolvemos al momento.
+    </p>
+  </details>
 </section>
 
 <footer>
@@ -102,17 +146,70 @@
 </footer>
 
 <script>
-  // ⚠️ CAMBIA ESTO por tu número, con código de país y sin espacios ni "+".
-  //    Perú es 51. Ejemplo: un 999 888 777 se escribe 51999888777
-  const WHATSAPP = '51914861217';
+  const SERVIDOR = 'https://asistente-ia-servidor.saulaguilarventura1.workers.dev';
 
-  const mensaje = encodeURIComponent(
-    'Hola, quiero el plan Pro de Asistente IA (S/ 19.90 al mes). ¿Cómo hago el pago?'
-  );
-  const enlace = `https://wa.me/${WHATSAPP}?text=${mensaje}`;
+  const $ = id => document.getElementById(id);
+  const ver = id => ['vistaPago', 'vistaEspera', 'vistaCodigo']
+    .forEach(v => $(v).classList.toggle('oculto', v !== id));
 
-  document.getElementById('btnWhatsApp').href = enlace;
-  document.getElementById('btnWhatsApp2').href = enlace;
+  // Si vuelve del pago o reabre la página, retomamos su pedido.
+  const enUrl = new URLSearchParams(location.search).get('pedido');
+  const pedidoActual = enUrl || localStorage.getItem('pedidoAsistenteIA');
+
+  $('btnPagar').addEventListener('click', async () => {
+    const contacto = $('contacto').value.trim();
+    const error = $('errorPago');
+    error.classList.add('oculto');
+
+    if (contacto.length < 6) {
+      error.textContent = 'Escribe tu WhatsApp o tu correo.';
+      error.classList.remove('oculto');
+      return;
+    }
+
+    $('btnPagar').disabled = true;
+    $('btnPagar').textContent = 'Abriendo el pago…';
+
+    try {
+      const r = await fetch(SERVIDOR + '/pedido', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contacto, plan: 'pro' })
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || 'No se pudo abrir el pago.');
+
+      localStorage.setItem('pedidoAsistenteIA', d.id);
+      location.href = d.pago;
+    } catch (e) {
+      error.textContent = e.message;
+      error.classList.remove('oculto');
+      $('btnPagar').disabled = false;
+      $('btnPagar').textContent = 'Pagar S/ 19.90 con Yape';
+    }
+  });
+
+  function esperar(id) {
+    ver('vistaEspera');
+    $('avisoEnlace').textContent =
+      'Si cierras la página, vuelve a: ' + location.origin + location.pathname + '?pedido=' + id;
+    consultar(id);
+    setInterval(() => consultar(id), 4000);
+  }
+
+  async function consultar(id) {
+    try {
+      const r = await fetch(SERVIDOR + '/pedido/' + id);
+      if (!r.ok) return;
+      const d = await r.json();
+      if (d.estado === 'aprobado' && d.codigo) {
+        $('codigo').textContent = d.codigo;
+        ver('vistaCodigo');
+      }
+    } catch { /* sin conexión: reintenta en el siguiente ciclo */ }
+  }
+
+  if (pedidoActual) esperar(pedidoActual);
 </script>
 
 </body>
