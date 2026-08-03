@@ -21,11 +21,25 @@
 </header>
 
 <section class="contenedor">
-  <div class="video">
-    <div>
-      <strong>Aquí va tu video de 30 segundos</strong>
-      <p style="margin-top:8px">Reemplaza este bloque por tu video mostrando el programa en uso.</p>
+  <!-- Demo animado: recrea la interfaz real del programa -->
+  <div class="demo" id="demo">
+    <div class="demo-pantalla">
+      <div class="demo-doc" id="demoDoc"></div>
+
+      <div class="demo-atajo" id="demoAtajo">
+        <kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>Espacio</kbd>
+      </div>
+
+      <div class="demo-panel" id="demoPanel">
+        <div class="demo-barra">
+          <span class="demo-titulo">Asistente IA</span>
+          <span class="demo-contador" id="demoContador">Te quedan 10 de 10 de prueba</span>
+          <span class="demo-botones"><i></i><i></i><i></i></span>
+        </div>
+        <div class="demo-respuesta" id="demoRespuesta"></div>
+      </div>
     </div>
+    <p class="demo-pie" id="demoPie">Abre cualquier documento…</p>
   </div>
 </section>
 
@@ -157,6 +171,102 @@
   <p>Asistente IA · Hecho en Perú</p>
   <p style="margin-top:8px"><a href="comprar.html">Comprar Pro</a></p>
 </footer>
+
+<script>
+// ---------------------------------------------------------------------------
+// Demo animado de 30 segundos. Tres escenas que muestran los tres usos:
+// examen, documento y error. Se repite en bucle.
+// ---------------------------------------------------------------------------
+(function () {
+  const doc = document.getElementById('demoDoc');
+  const atajo = document.getElementById('demoAtajo');
+  const panel = document.getElementById('demoPanel');
+  const respuesta = document.getElementById('demoRespuesta');
+  const contador = document.getElementById('demoContador');
+  const pie = document.getElementById('demoPie');
+
+  const escenas = [
+    {
+      pie: 'Abre lo que sea y presiona el atajo',
+      doc: '<b>PRUEBA DE CONOCIMIENTOS</b>' +
+           '<span>3. ¿Cuántos títulos comprende el Reglamento Nacional de Edificaciones?</span>' +
+           '<span>a) Dos&nbsp;&nbsp; b) Tres&nbsp;&nbsp; c) Cuatro&nbsp;&nbsp; d) Cinco</span>',
+      texto: 'La correcta es B, porque el Reglamento se divide en tres títulos.',
+      quedan: 9
+    },
+    {
+      pie: 'Resume documentos largos en segundos',
+      doc: '<b>CONTRATO DE ARRENDAMIENTO — 42 páginas</b>' +
+           '<span>Cláusula 14. El arrendatario asumirá los gastos de mantenimiento…</span>' +
+           '<span>Cláusula 15. La renta se reajustará anualmente conforme al IPC…</span>',
+      texto: 'Pagas tú el mantenimiento y la renta sube cada año con la inflación.',
+      quedan: 8
+    },
+    {
+      pie: 'Y te explica los errores que no entiendes',
+      doc: '<b>Microsoft Excel</b>' +
+           '<span>#¡REF!</span>' +
+           '<span>La fórmula de la celda D14 no se puede calcular.</span>',
+      texto: 'Borraste una celda que la fórmula usaba. Deshaz con Ctrl+Z o corrige D14.',
+      quedan: 7
+    }
+  ];
+
+  const esperar = ms => new Promise(r => setTimeout(r, ms));
+
+  async function escribir(texto) {
+    respuesta.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    respuesta.appendChild(cursor);
+
+    for (const letra of texto) {
+      cursor.insertAdjacentText('beforebegin', letra);
+      await esperar(28);
+    }
+    await esperar(900);
+    cursor.remove();
+  }
+
+  async function reproducir() {
+    for (const escena of escenas) {
+      pie.textContent = escena.pie;
+      doc.innerHTML = escena.doc;
+      doc.classList.add('visible');
+      await esperar(1400);
+
+      atajo.classList.add('visible');
+      await esperar(900);
+      atajo.classList.remove('visible');
+
+      panel.classList.add('visible');
+      respuesta.textContent = 'Mirando tu pantalla…';
+      await esperar(800);
+
+      await escribir(escena.texto);
+
+      contador.textContent = `Te quedan ${escena.quedan} de 10 de prueba`;
+      await esperar(1800);
+
+      panel.classList.remove('visible');
+      doc.classList.remove('visible');
+      await esperar(600);
+    }
+
+    contador.textContent = 'Te quedan 10 de 10 de prueba';
+    reproducir();
+  }
+
+  // Solo animamos cuando el demo está a la vista, para no gastar batería.
+  const observador = new IntersectionObserver(entradas => {
+    if (entradas[0].isIntersecting) {
+      observador.disconnect();
+      reproducir();
+    }
+  });
+  observador.observe(document.getElementById('demo'));
+})();
+</script>
 
 </body>
 </html>

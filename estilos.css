@@ -169,17 +169,114 @@ details p { margin-top: 10px; font-size: 0.95rem; }
   user-select: all;
 }
 
-/* --------------------------------- Video -------------------------------- */
-.video {
+/* ------------------------------ Demo animado ---------------------------- */
+.demo-pantalla {
+  position: relative;
   aspect-ratio: 16 / 9;
   border: 1px solid var(--borde);
   border-radius: 14px;
-  background: var(--panel);
-  display: grid;
-  place-items: center;
-  color: var(--suave);
+  background: #f4f5f7;
+  overflow: hidden;
+}
+
+/* El "documento" del fondo: papel claro con las preguntas */
+.demo-doc {
+  position: absolute;
+  inset: 0;
+  padding: 5% 7%;
+  color: #1b1f2a;
+  font-size: clamp(9px, 1.5vw, 15px);
+  line-height: 1.75;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.demo-doc.visible { opacity: 1; }
+.demo-doc b { display: block; margin-bottom: .5em; }
+.demo-doc span { display: block; color: #4a5163; }
+
+/* El atajo de teclado que aparece al centro */
+.demo-atajo {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%) scale(.85);
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: rgba(12, 14, 20, .9);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+  opacity: 0;
+  transition: opacity .25s, transform .25s;
+}
+.demo-atajo.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.demo-atajo kbd {
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  font-size: clamp(9px, 1.3vw, 13px);
+  font-family: inherit;
+}
+.demo-atajo span { color: #7e879b; font-size: 12px; }
+
+/* El panel de la app, igual que el programa real */
+.demo-panel {
+  position: absolute;
+  right: 4%; top: 8%;
+  width: 46%;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 12px;
+  background: #101219;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, .5);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s, transform .3s;
+  overflow: hidden;
+}
+.demo-panel.visible { opacity: 1; transform: translateY(0); }
+
+.demo-barra {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 11px;
+  background: rgba(255, 255, 255, .04);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+}
+.demo-titulo { font-size: clamp(8px, 1.1vw, 11px); font-weight: 600; color: #e9edf5; white-space: nowrap; }
+.demo-contador {
+  flex: 1;
+  font-size: clamp(7px, .95vw, 10px);
+  color: #9aa4b8;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.demo-contador.agotado { color: var(--rojo); font-weight: 600; }
+.demo-botones { display: flex; gap: 4px; }
+.demo-botones i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, .18); }
+
+.demo-respuesta {
+  padding: 14px 13px;
+  min-height: 8.5em;
+  font-size: clamp(8px, 1.15vw, 12px);
+  line-height: 1.65;
+  color: #e9edf5;
+  white-space: pre-wrap;
+}
+.demo-respuesta .cursor {
+  display: inline-block;
+  width: .5em; height: 1em;
+  background: var(--azul-claro);
+  vertical-align: -2px;
+  animation: parpadeo .9s steps(2, start) infinite;
+}
+@keyframes parpadeo { to { visibility: hidden; } }
+
+.demo-pie {
+  margin-top: 14px;
   text-align: center;
-  padding: 20px;
+  font-size: .95rem;
+  color: var(--suave);
+  min-height: 1.5em;
+  transition: opacity .3s;
 }
 
 /* ---------------------------------- Pie --------------------------------- */
